@@ -42,25 +42,17 @@ public class obj2pov {
 			if (reg_v.match(lineIn)) {
 				
 				String[] str = reg_v.getGroups();
-				double x = Double.parseDouble(str[1]);
-				double y = Double.parseDouble(str[2]);
-				double z = Double.parseDouble(str[3]);
-				vertices.add(new Vector(x,y,z));
+				vertices.add(new Vector(str[1],str[2],str[3]));
 				
 			} else if (reg_vn.match(lineIn)) {
 				
 				String[] str = reg_vn.getGroups();
-				double x = Double.parseDouble(str[1]);
-				double y = Double.parseDouble(str[2]);
-				double z = Double.parseDouble(str[3]);
-				normals.add(new Vector(x,y,z));
+				normals.add(new Vector(str[1],str[2],str[3]));
 				
 			} else if (reg_vt.match(lineIn)) {
 				
 				String[] str = reg_vt.getGroups();
-				double x = Double.parseDouble(str[1]);
-				double y = Double.parseDouble(str[2]);
-				texture.add(new Vector(x,y));
+				texture.add(new Vector(str[1],str[2]));
 				
 			} else if (reg_f.match(lineIn)) {
 				
@@ -174,29 +166,29 @@ public class obj2pov {
 	
 	private class Vector {
 		
-		private double m_x, m_y, m_z;
+		private String m_x, m_y, m_z;
 		
-		public Vector(double x, double y) {
+		public Vector(String x, String y) {
 			m_x = x;
 			m_y = y;
-			m_z = 0;
+			m_z = "0";
 		}
 		
-		public Vector(double x, double y, double z) {
+		public Vector(String x, String y, String z) {
 			m_x = x;
 			m_y = y;
 			m_z = z;
 		}
 		
-		public double getX() { 
+		public String getX() { 
 			return m_x;
 		}
 		
-		public double getY() { 
+		public String getY() { 
 			return m_y;
 		}
 		
-		public double getZ() { 
+		public String getZ() { 
 			return m_z;
 		}
 		
