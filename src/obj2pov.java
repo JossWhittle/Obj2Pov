@@ -97,8 +97,8 @@ public class obj2pov {
 	private String padMesh(String str) {
 		
 		return "// This file was generated using Obj2Pov written by Joss Whittle.\n" + 
-			   "// For more information on the project see: \n" +
-			   "\n\nmesh {\n" + str + "\n}";
+			   "// For more information on the project see: https://github.com/L2Program/Obj2Pov\n" +
+			   "\nmesh {\n" + str + "\n}";
 	}
 	
 	private class Triangle {
