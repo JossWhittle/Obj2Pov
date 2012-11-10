@@ -4,7 +4,7 @@ Obj2Pov is a command line utility for converting 3D object (.obj) files to a for
 
 ### Usage
 
-The program reads from Std::Input and writes to Std:Output. An example of how to use Obj2Pov would be as follows:
+The program reads from Std::Input and writes to Std::Output. An example of how to use Obj2Pov would be as follows:
 
 	// To run the compiled jar
 	java -jar obj2pov.jar < teapot.obj > teapot.pov
@@ -43,4 +43,4 @@ To use the generated files in Pov-Ray, simply #declare them into the head your s
  		pigment { Red }
 	}
 
-<center>![Render of the above sample scene.](https://raw.github.com/L2Program/Obj2Pov/master/teapot.png)</center>
+![Render of the above sample scene.](https://raw.github.com/L2Program/Obj2Pov/master/teapot.png)
