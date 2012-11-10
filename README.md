@@ -43,4 +43,4 @@ To use the generated files in Pov-Ray, simply #declare them into the head your s
  		pigment { Red }
 	}
 
-![Render of the above sample scene.]()
+![Render of the above sample scene.](https://raw.github.com/L2Program/Obj2Pov/master/teapot.png)
