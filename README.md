@@ -12,6 +12,9 @@ The program reads from Std::Input and writes to Std::Output. An example of how t
 	// To compile from source
 	javac obj2pov.java
 	java obj2pov < teapot.obj > teapot.pov
+	
+	// To enable triangle smoothing use --smooth
+	java -jar obj2pov.jar --smooth < teapot.obj > teapot.pov
 
 Where teapot.obj is the file to convert and teapot.pov is the destination file.
 

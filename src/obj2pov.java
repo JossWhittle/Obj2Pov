@@ -7,19 +7,19 @@ import java.util.regex.Pattern;
 public class obj2pov {
 
 	public static void main(String[] args) {
-		new obj2pov();
+		new obj2pov(args);
 	}
 	
-	public obj2pov() {
+	public obj2pov(String[] args) {
 		
 		try {
-			convert();
+			convert((args.length > 0 && args[0].equals("--smooth")));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	private void convert() throws Exception {
+	private void convert(boolean smooth) throws Exception {
 		
 		String f = "(\\-?\\d+\\.\\d+)";
 		Regex reg_v = new Regex("(?uix)^v\\s+"+f+"\\s+"+f+"\\s+"+f);
@@ -87,7 +87,7 @@ public class obj2pov {
 										   texture.get(t1),
 										   texture.get(t2));
 				
-				result += t.toString();
+				result += (!smooth ? t.toString() : t.getSmooth());
 			}
 		}
 		
@@ -156,6 +156,13 @@ public class obj2pov {
 		}
 		
 		public String toString() {
+			
+			return "\n\ttriangle {\n\t\t" + getV0().toString() + ", " + getV1().toString() + ", " + getV2().toString() +
+								 "\n\t\tuv_vectors " + getT0().get2D() + ", " + getT1().get2D() + ", " + getT2().get2D() +
+				   "\n\t}";
+		}
+		
+		public String getSmooth() {
 			
 			return "\n\tsmooth_triangle {\n\t\t" + getV0().toString() + ", " + getN0().toString() + ", " +
 									  "\n\t\t" + getV1().toString() + ", " + getN1().toString() + ", " +
