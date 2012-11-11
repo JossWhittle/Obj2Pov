@@ -21,53 +21,57 @@ public class obj2pov {
 	
 	private void convert(boolean smooth) throws Exception {
 		
-		String f = "(\\-?\\d+\\.\\d+)";
-		Regex reg_v = new Regex("(?uix)^v\\s+"+f+"\\s+"+f+"\\s+"+f);
-		Regex reg_vn = new Regex("(?uix)^vn\\s+"+f+"\\s+"+f+"\\s+"+f);
-		Regex reg_vt = new Regex("(?uix)^vt\\s+"+f+"\\s+"+f);
-		Regex reg_f = new Regex("(?uix)^f\\s+(\\d+)/(\\d*)/(\\d+)\\s+(\\d+)/(\\d*)/(\\d+)\\s+(\\d+)/(\\d*)/(\\d+)");
+		System.out.println("// This file was generated using Obj2Pov written by Joss Whittle.\n" + 
+				   		   "// For more information on the project see: https://github.com/L2Program/Obj2Pov\n" +
+				   		   "\nmesh {\n");
 		
-		String result = "";
 		ArrayList<Vector> vertices = new ArrayList<Vector>();
 		ArrayList<Vector> normals = new ArrayList<Vector>();
 		ArrayList<Vector> texture = new ArrayList<Vector>();
-		
-		ArrayList<Triangle> triangles = new ArrayList<Triangle>();
 		
 		Scanner input = new Scanner(System.in);
 		while (input.hasNext()) {
 			
 			String lineIn = input.nextLine();
 			
-			if (reg_v.match(lineIn)) {
+			if (lineIn.startsWith("v ")) {
 				
-				String[] str = reg_v.getGroups();
+				String[] str = lineIn.split(" ");
 				vertices.add(new Vector(str[1],str[2],str[3]));
 				
-			} else if (reg_vn.match(lineIn)) {
+				//System.out.println("// Vector " + str[1] + ", " + str[2] + ", " + str[3]);
 				
-				String[] str = reg_vn.getGroups();
+			} else if (lineIn.startsWith("vn ")) {
+				
+				String[] str = lineIn.split(" ");
 				normals.add(new Vector(str[1],str[2],str[3]));
 				
-			} else if (reg_vt.match(lineIn)) {
+				//System.out.println("// Normal " + str[1] + ", " + str[2] + ", " + str[3]);
 				
-				String[] str = reg_vt.getGroups();
+			} else if (lineIn.startsWith("vt ")) {
+				
+				String[] str = lineIn.split(" ");
 				texture.add(new Vector(str[1],str[2]));
 				
-			} else if (reg_f.match(lineIn)) {
+				//System.out.println("// Texture " + str[1] + ", " + str[2]);
 				
-				String[] str = reg_f.getGroups();
-				int v0 = Integer.parseInt(str[1]) - 1;
-				int v1 = Integer.parseInt(str[4]) - 1;
-				int v2 = Integer.parseInt(str[7]) - 1;
+			} else if (lineIn.startsWith("f ")) {
 				
-				int n0 = Integer.parseInt(str[3]) - 1;
-				int n1 = Integer.parseInt(str[6]) - 1;
-				int n2 = Integer.parseInt(str[9]) - 1;
+				String[] s = lineIn.substring(2).split(" ");
+				String[] str = s[0].split("/");
+				int v0 = Integer.parseInt(str[0]) - 1;
+				int t0 = Integer.parseInt(str[1]) - 1;
+				int n0 = Integer.parseInt(str[2]) - 1;
 				
-				int t0 = Integer.parseInt(str[2]) - 1;
-				int t1 = Integer.parseInt(str[5]) - 1;
-				int t2 = Integer.parseInt(str[8]) - 1;
+				str = s[1].split("/");
+				int v1 = Integer.parseInt(str[0]) - 1;
+				int t1 = Integer.parseInt(str[1]) - 1;
+				int n1 = Integer.parseInt(str[2]) - 1;
+				
+				str = s[2].split("/");
+				int v2 = Integer.parseInt(str[0]) - 1;
+				int t2 = Integer.parseInt(str[1]) - 1;
+				int n2 = Integer.parseInt(str[2]) - 1;
 				
 				Triangle t = new Triangle(vertices.get(v0),
 										   vertices.get(v1),
@@ -79,18 +83,11 @@ public class obj2pov {
 										   texture.get(t1),
 										   texture.get(t2));
 				
-				result += (!smooth ? t.toString() : t.getSmooth());
+				System.out.println(!smooth ? t.toString() : t.getSmooth());
 			}
 		}
 		
-		System.out.println(padMesh(result));
-	}
-	
-	private String padMesh(String str) {
-		
-		return "// This file was generated using Obj2Pov written by Joss Whittle.\n" + 
-			   "// For more information on the project see: https://github.com/L2Program/Obj2Pov\n" +
-			   "\nmesh {\n" + str + "\n}";
+		System.out.println("\n}");
 	}
 	
 	private class Triangle {
